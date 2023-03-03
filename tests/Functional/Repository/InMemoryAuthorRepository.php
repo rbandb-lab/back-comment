@@ -33,8 +33,8 @@ class InMemoryAuthorRepository implements AuthorRepository
 
     public function find(string $id)
     {
-        foreach ($this->authors->getIterator() as $author){
-            if($author->id === $id){
+        foreach ($this->authors->getIterator() as $author) {
+            if ($author->id === $id) {
                 return $author;
             }
         }

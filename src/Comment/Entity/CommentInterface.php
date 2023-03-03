@@ -6,5 +6,4 @@ namespace Comment\Entity;
 
 interface CommentInterface
 {
-
 }

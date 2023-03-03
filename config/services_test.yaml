@@ -5,3 +5,14 @@ services:
 
     Tests\Acceptance\:
         resource: '../tests/Acceptance/*'
+
+    Application\CommandHandler\:
+        resource: '../src/Application/CommandHandler/*'
+        public: true
+
+    Application\QueryHandler\:
+        resource: '../src/Application/QueryHandler/*'
+        public: true
+        
+    Infra\Symfony6\Service\CommentIdGenerator:
+        public: true

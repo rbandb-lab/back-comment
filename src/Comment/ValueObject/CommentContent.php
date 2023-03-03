@@ -8,22 +8,24 @@ use Assert\Assert;
 use Assert\LazyAssertionException;
 use Comment\Exception\InvalidCommentContentException;
 
-class CommentContent
+final class CommentContent
 {
     private string $content;
 
     public function __construct(string $content)
     {
         $content = trim($content);
-        try{
+        try {
             Assert::lazy()
                 ->that($content, 'content')
                 ->string("must be a string")
                 ->minLength(2)
                 ->maxLength(255)
                 ->verifyNow();
-        } catch (LazyAssertionException $exception){
-            throw new InvalidCommentContentException(sprintf($exception->getPropertyPath().'%s'.$exception->getMessage()," "));
+        } catch (LazyAssertionException $exception) {
+            $exceptions = $exception->getErrorExceptions();
+            $exception = $exceptions[0];
+            throw new InvalidCommentContentException(sprintf($exception->getPropertyPath().'%s'.$exception->getMessage(), " "));
         }
 
         $this->content = trim($content);

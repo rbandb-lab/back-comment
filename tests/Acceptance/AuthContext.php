@@ -17,7 +17,7 @@ class AuthContext implements Context
 
     public function isIdentified(Author $author): bool
     {
-        if($author->id === $this->author?->id && $author->id !== null){
+        if ($author->id === $this->author?->id && $author->id !== null) {
             return true;
         }
         return false;

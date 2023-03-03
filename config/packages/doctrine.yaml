@@ -1,7 +1,9 @@
 doctrine:
     dbal:
         url: '%env(resolve:DATABASE_URL)%'
-
+        types:
+            uuid: Ramsey\Uuid\Doctrine\UuidType
+            
         # IMPORTANT: You MUST configure your server version,
         # either here or in the DATABASE_URL env var (see .env file)
         #server_version: '15'
@@ -13,7 +15,7 @@ doctrine:
             App:
                 is_bundle: false
                 dir: '%kernel.project_dir%/src/Infra/Symfony6/ORM/Doctrine/Entity'
-                prefix: 'App\Symfony6\Infra\Symfony6\ORM\Entity'
+                prefix: 'Infra\Symfony6\ORM\Doctrine\Entity'
                 alias: App
 
 when@test:
