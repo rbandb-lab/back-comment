@@ -4,22 +4,21 @@ declare(strict_types=1);
 
 namespace Comment\Model;
 
-use Comment\Exception\CannotDeleteCommentWithChidlrendException;
-use Comment\ValueObject\ArticleContent;
+use Comment\Exception\CannotDeleteCommentWithChildrenException;
+use Comment\ValueObject\PostContent;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Webmozart\Assert\Assert;
 
-class Article
+final class Post
 {
     private string $id;
-    private ArticleContent $articleContent;
-
     private Collection $comments;
 
-    public function __construct(string $id, ArticleContent $articleContent)
+
+    public function __construct(string $id)
     {
         $this->id = $id;
-        $this->articleContent = $articleContent;
         $this->comments = new ArrayCollection();
     }
 
@@ -32,21 +31,10 @@ class Article
     {
         if ($drafComment->hasChildren() === false) {
             $this->comments->removeElement($drafComment);
-
             return;
         }
 
-        throw new CannotDeleteCommentWithChidlrendException($drafComment->getId());
-    }
-
-    public function getArticleContent(): ArticleContent
-    {
-        return $this->articleContent;
-    }
-
-    public function setArticleContent(ArticleContent $articleContent): void
-    {
-        $this->articleContent = $articleContent;
+        throw new CannotDeleteCommentWithChildrenException($drafComment->getCommentId());
     }
 
     public function getId(): string

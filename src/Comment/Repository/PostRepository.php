@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Comment\Repository;
 
-interface ArticleRepository
+interface PostRepository
 {
     public function find(string $id);
 }

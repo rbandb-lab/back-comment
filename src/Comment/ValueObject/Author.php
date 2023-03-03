@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Comment\ValueObject;
 
-class Author
+final class Author
 {
     private string $id;
     private string $username;

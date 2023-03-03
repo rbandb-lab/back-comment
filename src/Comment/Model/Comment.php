@@ -4,28 +4,32 @@ declare(strict_types=1);
 
 namespace Comment\Model;
 
+use Comment\Entity\CommentInterface;
 use Comment\Exception\CannotRateCommentTwiceException;
+use Comment\Exception\CannotRateItsOwnCommentException;
 use Comment\ValueObject\Author;
 use Comment\ValueObject\CommentContent;
+use Comment\ValueObject\CommentId;
 use Comment\ValueObject\CommentRating;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
-class Comment
+final class Comment implements CommentInterface
 {
-    private string $id;
+    private CommentId|string $commentId;
     private Author $author;
-    private string $articleId;
+    private string $postId;
     private Collection $subComments;
     private int $createdAt;
     private CommentContent $commentContent;
     private Collection $ratings;
-    private ?string $parentId = null;
 
-    public function __construct(string $id, string $articleId, Author $author, string $commentContent)
+    private CommentId|string|null $parentId = null;
+
+    public function __construct(CommentId|string $commentId, string $postId, Author $author, string $commentContent)
     {
-        $this->id = $id;
-        $this->articleId = $articleId;
+        $this->commentId = $commentId;
+        $this->postId = $postId;
         $this->author = $author;
         $this->subComments = new ArrayCollection();
         $this->createdAt = time();
@@ -40,7 +44,7 @@ class Comment
 
     public function reply(Comment $replyComment): void
     {
-        $replyComment->setParentId($this->getId());
+        $replyComment->setParentId($this->getCommentId());
         $this->subComments->add($replyComment);
     }
 
@@ -51,10 +55,14 @@ class Comment
 
     public function addRating(CommentRating $rating): void
     {
+        if ($this->author->id === $rating->getRatingAuthor()->id) {
+            throw new CannotRateItsOwnCommentException("Author tried to rate its own comment");
+        }
+
         foreach ($this->ratings->getIterator() as $existingRating) {
             /** @var CommentRating $existingRating */
-            if ($existingRating->getRatingAuthor()->getId() === $rating->getRatingAuthor()->getId()) {
-                throw new CannotRateCommentTwiceException('Author has already submitted rating');
+            if ($existingRating->getRatingAuthor()->id === $rating->getRatingAuthor()->id) {
+                throw new CannotRateCommentTwiceException("Author has already submitted rating");
             }
         }
         $this->ratings->add($rating);
@@ -62,20 +70,27 @@ class Comment
 
     public function getRating(): ?float
     {
-        $ratingResult = 0;
-        $count = 0;
-        /** @var CommentRating $rating */
-        foreach ($this->ratings->getIterator() as $rating) {
-            $ratingResult += $rating->getRate();
-            ++$count;
+        $sum = 0;
+        $count = $this->ratings->count();
+        if($count > 0){
+            $ratings = $this->ratings->toArray();
+            $arrayOfRatings = array_map(function (CommentRating $rating){
+                return $rating->getRate();
+            },$ratings);
+            $sum = array_sum($arrayOfRatings);
         }
 
-        return $ratingResult / $count;
+        return $count > 0 ? $sum / $count : 0;
     }
 
-    public function getId(): string
+    public function getRatings(): Collection
     {
-        return $this->id;
+        return $this->ratings;
+    }
+
+    public function getCommentId(): CommentId|string
+    {
+        return $this->commentId;
     }
 
     public function getAuthor(): Author
@@ -83,9 +98,9 @@ class Comment
         return $this->author;
     }
 
-    public function getArticleId(): string
+    public function getPostId(): string
     {
-        return $this->articleId;
+        return $this->postId;
     }
 
     public function getCreatedAt(): int
@@ -93,12 +108,12 @@ class Comment
         return $this->createdAt;
     }
 
-    public function getParentId(): ?string
+    public function getParentId(): CommentId|string|null
     {
         return $this->parentId;
     }
 
-    public function setParentId(?string $parentId): void
+    public function setParentId(CommentId|string|null $parentId): void
     {
         $this->parentId = $parentId;
     }
@@ -110,7 +125,7 @@ class Comment
 
     public function addSubComment(Comment $comment): void
     {
-        $comment->setParentId($this->id);
+        $comment->setParentId($this->getCommentId());
         $this->subComments->add($comment);
     }
 }

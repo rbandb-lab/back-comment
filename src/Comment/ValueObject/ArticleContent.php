@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Comment\ValueObject;
 
-class ArticleContent
+final class PostContent
 {
     public string $content;
 

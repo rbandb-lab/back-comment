@@ -23,5 +23,28 @@ services:
             - '../src/Infra/Symfony6/ORM/Entity/'
             - '../src/Infra/Kernel.php'
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    SharedKernel\:
+        resource: '../src/SharedKernel'
+
+    UI\:
+        resource: '../src/UI'
+
+    # Actions;
+    UI\Http\Action\:
+        resource: '../src/UI/Http/Action/'
+        tags: [controller.service_arguments]
+
+    # Messenger
+    _instanceof:
+        SharedKernel\Application\CommandHandler\CommandHandler:
+            tags: [messenger.message_handler]
+        SharedKernel\Application\QueryHandler\QueryHandler:
+            tags: [messenger.message_handler]
+
+    # Repository:
+    Comment\Repository\CommentRepository:
+        class: Infra\Symfony6\ORM\Doctrine\Repository\CommentRepository
+
+    # Services:
+    Comment\Service\CommentIdGenerator:
+        class: Infra\Symfony6\Service\CommentIdGenerator

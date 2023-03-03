@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace Comment\ValueObject;
 
 use Assert\Assert;
+use Comment\Exception\InvalidCommentRatingException;
 
-class CommentRating
+final class CommentRating
 {
     private Author $ratingAuthor;
     private float $rate;
+    private int $createdAt;
 
     public function __construct(Author $ratingAuthor, float $rate)
     {
@@ -17,14 +19,11 @@ class CommentRating
         try {
             Assert::lazy()
                 ->that($rate, 'rating')
-                ->max(5, 'cannot exceed 5')
-                ->verifyNow();
-            Assert::lazy()
-                ->that($rate * 2 - floor($rate * 2))
-                ->eq(0)
+                ->min(0, 'must be positive')
+                ->max(10, 'cannot exceed 10')
                 ->verifyNow();
         } catch (\Exception $exception) {
-            dd($exception);
+            throw new InvalidCommentRatingException(sprintf($exception->getPropertyPath().'%s'.$exception->getMessage(), " "));
         }
 
         $this->rate = $rate;
