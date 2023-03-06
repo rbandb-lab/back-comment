@@ -7,7 +7,7 @@ namespace UI\Http\Presentation;
 use Comment\Model\Comment;
 use UI\Http\Normalizer\CommentNormalizer;
 
-class RatePresenter
+final class RatePresenter
 {
     public function present(Comment $comment): array
     {

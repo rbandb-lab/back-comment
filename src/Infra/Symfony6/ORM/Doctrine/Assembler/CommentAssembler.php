@@ -17,10 +17,10 @@ final class CommentAssembler
     public function fromModel(Comment $comment): DoctrineComment
     {
         $commentId = $comment->getCommentId();
-        if(is_string($commentId)){
+        if (is_string($commentId)) {
             $id = Uuid::isValid($commentId) ? Uuid::fromString($commentId) : $commentId;
         }
-        if($commentId instanceof CommentId){
+        if ($commentId instanceof CommentId) {
             $id = $commentId->getUuid();
         }
 
@@ -60,7 +60,7 @@ final class CommentAssembler
             commentContent: $ormComment->getCommentContent()
         );
 
-        foreach ($ormComment->getRatings()->getIterator() as $ormRating){
+        foreach ($ormComment->getRatings()->getIterator() as $ormRating) {
             $comment->addRating(RatingAssembler::fromOrm($ormRating));
         }
 

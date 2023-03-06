@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use UI\Http\Presentation\RatePresenter;
 
-class RateResponder extends ApiResponder
+final class RateResponder extends ApiResponder
 {
     private RatePresenter $presenter;
     private PropertyAccessorInterface $accessor;

@@ -17,7 +17,8 @@ class RatingAssembler
             ratingAuthor: new Author(
                 id: (string) $user->getId(),
                 username: $user->getUsername()
-            ),rate: $rating->getValue()
+            ),
+            rate: $rating->getValue()
         );
     }
 }

@@ -72,11 +72,11 @@ final class Comment implements CommentInterface
     {
         $sum = 0;
         $count = $this->ratings->count();
-        if($count > 0){
+        if ($count > 0) {
             $ratings = $this->ratings->toArray();
-            $arrayOfRatings = array_map(function (CommentRating $rating){
+            $arrayOfRatings = array_map(function (CommentRating $rating) {
                 return $rating->getRate();
-            },$ratings);
+            }, $ratings);
             $sum = array_sum($arrayOfRatings);
         }
 

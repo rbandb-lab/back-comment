@@ -13,7 +13,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Infra\Symfony6\ORM\Doctrine\Assembler\CommentAssembler;
 use Infra\Symfony6\ORM\Doctrine\Entity\Comment as DoctrineComment;
 
-class CommentRepository extends ServiceEntityRepository implements CommentRepositoryInterface
+final class CommentRepository extends ServiceEntityRepository implements CommentRepositoryInterface
 {
     private CommentAssembler $assembler;
 
@@ -57,7 +57,7 @@ class CommentRepository extends ServiceEntityRepository implements CommentReposi
     {
         $result = new ArrayCollection($result);
         $comments = [];
-        foreach ($result->getIterator() as $ormComment){
+        foreach ($result->getIterator() as $ormComment) {
             $comments[] = $this->assembler->fromOrm($ormComment);
         }
 

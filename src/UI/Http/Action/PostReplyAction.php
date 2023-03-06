@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 use UI\Http\Responder\ReplyResponder;
 
-class PostReplyAction
+final class PostReplyAction
 {
     use EnvelopeTrait;
 

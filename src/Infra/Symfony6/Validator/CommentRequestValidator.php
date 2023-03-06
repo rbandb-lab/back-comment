@@ -8,7 +8,7 @@ use Assert\Assert;
 use Assert\LazyAssertion;
 use Symfony\Component\String\UnicodeString;
 
-class CommentRequestValidator
+final class CommentRequestValidator
 {
     public function validate(array $data): void
     {

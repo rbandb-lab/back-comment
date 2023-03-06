@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use UI\Http\Presentation\ReplyPresenter;
 
-class ReplyResponder extends ApiResponder
+final class ReplyResponder extends ApiResponder
 {
     private ReplyPresenter $presenter;
 
