@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Application\Query;
 
-final class ByPostQuery
+use SharedKernel\Application\Query\QueryInterface;
+
+final class ByPostQuery implements QueryInterface
 {
     private string $postId;
 

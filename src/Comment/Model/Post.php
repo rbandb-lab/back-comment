@@ -15,7 +15,6 @@ final class Post
     private string $id;
     private Collection $comments;
 
-
     public function __construct(string $id)
     {
         $this->id = $id;

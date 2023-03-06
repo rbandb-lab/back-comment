@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Application\Query;
 
-class LatestQuery
+use SharedKernel\Application\Query\QueryInterface;
+
+final class LatestQuery implements QueryInterface
 {
     private int $number;
 

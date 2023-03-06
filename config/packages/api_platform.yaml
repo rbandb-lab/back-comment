@@ -1,0 +1,32 @@
+api_platform:
+    # The title of the API.
+    title: 'Comments app'
+
+    # The description of the API.
+    description: 'Api to discuss and create comments on a post'
+    version: '0.1.0'
+    validator:
+        # If you want to serialize only some payload fields, define them like this: [ severity, anotherPayloadField ]
+        serialize_payload_fields: []
+        # To enable or disable query parameters validation on collection GET requests
+        query_parameter_validation: true
+
+    mapping:
+        # The list of paths with files or directories where the bundle will look for additional resource files.
+        paths: []
+
+    # The list of your resources class directories. Defaults to the directories of the mapping paths but might differ.
+    resource_class_directories:
+        - '%kernel.project_dir%/src/Comment/Model/'
+
+    enable_re_doc: false
+    enable_swagger_ui: true
+    swagger:
+        versions: [3]
+    # Set this to false if you want Webby to disappear.
+    show_webby: false
+
+    formats:
+        json:
+            mime_types: ['application/json']
+

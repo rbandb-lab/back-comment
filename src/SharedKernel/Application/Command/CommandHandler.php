@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SharedKernel\Application\CommandHandler;
+namespace SharedKernel\Application\Command;
 
 interface CommandHandler
 {

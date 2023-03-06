@@ -8,8 +8,9 @@ use Comment\Model\Dto\CommentDto;
 use Comment\ValueObject\Author;
 use Comment\ValueObject\CommentContent;
 use Comment\ValueObject\CommentId;
+use SharedKernel\Application\Command\CommandInterface;
 
-final class CommentCommand
+final class CommentCommand implements CommandInterface
 {
     private CommentId $commentId;
     private string $postId;

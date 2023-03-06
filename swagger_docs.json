@@ -1,0 +1,251 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Comments app",
+        "description": "Api to discuss and create comments on a post",
+        "version": "0.1.0"
+    },
+    "servers": [
+        {
+            "url": "/",
+            "description": ""
+        }
+    ],
+    "paths": {
+        "/api/posts/{id}/comments": {
+            "get": {
+                "operationId": "api_posts_idcomments_get",
+                "tags": [
+                    "Comment"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Comment resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Comment"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "summary": "Retrieves a Comment resource.",
+                "description": "Retrieves a Comment resource.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Comment identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            },
+            "post": {
+                "operationId": "create_comment",
+                "tags": [
+                    "Comment"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Comment resource created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Comment"
+                                }
+                            }
+                        },
+                        "links": {}
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
+                    }
+                },
+                "summary": "Create a comment",
+                "description": "Creates a Comment resource.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Comment identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "userId": {
+                                        "type": "string"
+                                    },
+                                    "username": {
+                                        "type": "string"
+                                    },
+                                    "postId": {
+                                        "type": "string"
+                                    },
+                                    "commentContent": {
+                                        "type": "string"
+                                    },
+                                    "parentId": {
+                                        "type": [
+                                            "string"
+                                        ],
+                                        "nullable": "true"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": false
+                },
+                "deprecated": false
+            },
+            "parameters": []
+        }
+    },
+    "components": {
+        "schemas": {
+            "Author": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "username": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Comment": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "commentId": {
+                        "$ref": "#/components/schemas/CommentId"
+                    },
+                    "author": {
+                        "$ref": "#/components/schemas/Author"
+                    },
+                    "postId": {
+                        "type": "string"
+                    },
+                    "subComments": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "iri-reference"
+                        }
+                    },
+                    "createdAt": {
+                        "readOnly": true,
+                        "type": "integer"
+                    },
+                    "commentContent": {
+                        "$ref": "#/components/schemas/CommentContent"
+                    },
+                    "ratings": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/CommentRating"
+                        }
+                    },
+                    "parentId": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/CommentId"
+                            }
+                        ],
+                        "nullable": true
+                    },
+                    "children": {
+                        "readOnly": true,
+                        "type": "boolean"
+                    },
+                    "rating": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/CommentRating"
+                        }
+                    }
+                }
+            },
+            "CommentContent": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "content": {
+                        "type": "string"
+                    }
+                }
+            },
+            "CommentId": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "uuid": {
+                        "readOnly": true,
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                }
+            },
+            "CommentRating": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "ratingAuthor": {
+                        "$ref": "#/components/schemas/Author"
+                    },
+                    "rate": {
+                        "type": "number"
+                    }
+                }
+            }
+        },
+        "responses": {},
+        "parameters": {},
+        "examples": {},
+        "requestBodies": {},
+        "headers": {},
+        "securitySchemes": {}
+    },
+    "security": [],
+    "tags": []
+}

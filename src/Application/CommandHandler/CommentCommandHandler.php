@@ -7,7 +7,7 @@ namespace Application\CommandHandler;
 use Application\Command\CommentCommand;
 use Comment\Model\Comment;
 use Comment\Repository\CommentRepository;
-use SharedKernel\Application\CommandHandler\CommandHandler;
+use SharedKernel\Application\Command\CommandHandler;
 
 final class CommentCommandHandler implements CommandHandler
 {

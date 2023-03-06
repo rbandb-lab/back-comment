@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace UI\Http\Action;
+namespace Infra\Symfony6\Messenger;
 
 use LogicException;
 use Symfony\Component\Messenger\Envelope;

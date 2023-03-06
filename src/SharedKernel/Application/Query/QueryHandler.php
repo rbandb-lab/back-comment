@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SharedKernel\Application\QueryHandler;
+namespace SharedKernel\Application\Query;
 
 interface QueryHandler
 {

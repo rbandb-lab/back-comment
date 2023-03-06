@@ -7,8 +7,9 @@ namespace Application\Command;
 use Comment\Model\Dto\RatingDto;
 use Comment\ValueObject\Author;
 use Comment\ValueObject\CommentId;
+use SharedKernel\Application\Command\CommandInterface;
 
-final class RateCommand
+final class RateCommand implements CommandInterface
 {
     private CommentId $commentId;
     private string $postId;
