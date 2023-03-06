@@ -19,7 +19,7 @@ class CommentProcessor implements ProcessorInterface
         private CommandBusInterface $commandBus,
     ) {
     }
-    public function process($data, Operation $operation, array $uriVariables = [], array $context = [])
+    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = [])
     {
         $command = new CommentCommand(
             commentId: $data->id,

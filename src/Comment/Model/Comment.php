@@ -4,12 +4,6 @@ declare(strict_types=1);
 
 namespace Comment\Model;
 
-use ApiPlatform\Action\NotFoundAction;
-use ApiPlatform\Metadata\ApiResource;
-use ApiPlatform\Metadata\Get;
-use ApiPlatform\Metadata\Link;
-use ApiPlatform\Metadata\Post;
-use Application\Command\CommentCommand;
 use Comment\Entity\CommentInterface;
 use Comment\Exception\CannotRateCommentTwiceException;
 use Comment\Exception\CannotRateItsOwnCommentException;
@@ -19,10 +13,6 @@ use Comment\ValueObject\CommentId;
 use Comment\ValueObject\CommentRating;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Infra\ApiPlatform\State\Processor\CommentProcessor;
-use Infra\ApiPlatform\State\provider\CommentProvider;
-use ApiPlatform\OpenApi\Model;
-
 
 final class Comment implements CommentInterface
 {
@@ -33,6 +23,7 @@ final class Comment implements CommentInterface
     private int $createdAt;
     private CommentContent $commentContent;
     private Collection $ratings;
+
     private CommentId|string|null $parentId = null;
 
     public function __construct(CommentId|string $commentId, string $postId, Author $author, string $commentContent)
