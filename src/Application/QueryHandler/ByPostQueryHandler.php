@@ -6,7 +6,7 @@ namespace Application\QueryHandler;
 
 use Application\Query\ByPostQuery;
 use Comment\Repository\CommentRepository;
-use SharedKernel\Application\QueryHandler\QueryHandler;
+use SharedKernel\Application\Query\QueryHandler;
 
 final class ByPostQueryHandler implements QueryHandler
 {

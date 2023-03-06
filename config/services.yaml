@@ -36,9 +36,9 @@ services:
 
     # Messenger
     _instanceof:
-        SharedKernel\Application\CommandHandler\CommandHandler:
+        SharedKernel\Application\Command\CommandHandler:
             tags: [messenger.message_handler]
-        SharedKernel\Application\QueryHandler\QueryHandler:
+        SharedKernel\Application\Query\QueryHandler:
             tags: [messenger.message_handler]
 
     # Repository:

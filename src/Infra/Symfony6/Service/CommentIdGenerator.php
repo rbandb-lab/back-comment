@@ -9,7 +9,7 @@ use Comment\ValueObject\CommentId;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
-class CommentIdGenerator implements IdGeneratorInterface
+final class CommentIdGenerator implements IdGeneratorInterface
 {
     public function createId(UuidInterface|string|null $id = null): CommentId
     {
