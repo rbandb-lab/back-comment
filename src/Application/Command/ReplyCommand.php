@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace Application\Command;
 
-use Comment\Model\Dto\CommentDto;
 use Comment\Model\Dto\ReplyDto;
 use Comment\ValueObject\Author;
 use Comment\ValueObject\CommentContent;
 use Comment\ValueObject\CommentId;
-use Ramsey\Uuid\UuidInterface;
+use SharedKernel\Application\Command\CommandInterface;
 
-final class ReplyCommand
+final class ReplyCommand implements CommandInterface
 {
     private CommentId|string $id;
     private string $postId;

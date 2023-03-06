@@ -12,23 +12,22 @@ use Comment\ValueObject\CommentContent;
 use Infra\Symfony6\ORM\Doctrine\Entity\User;
 use Infra\Symfony6\Validator\CommentRequestValidator;
 use Ramsey\Uuid\Uuid;
+use SharedKernel\Application\Command\CommandBusInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use UI\Http\Responder\CommentResponder;
 
 #[Route(path: "/api/posts/{id}/comments", name: "post_comment", methods: ["POST"])]
 final class PostCommentAction
 {
-    use EnvelopeTrait;
-    private MessageBusInterface $commandBus;
+    private CommandBusInterface $commandBus;
     private CommentIdGenerator $commentIdGenerator;
     private CommentRequestValidator $commentRequestValidator;
     private CommentResponder $responder;
 
     public function __construct(
-        MessageBusInterface $commandBus,
+        CommandBusInterface $commandBus,
         CommentIdGenerator $commentIdGenerator,
         CommentRequestValidator $commentRequestValidator,
         CommentResponder $responder,
@@ -56,11 +55,11 @@ final class PostCommentAction
             commentContent: new CommentContent($data['commentContent'])
         );
 
-        $comment = $this->handle(
-            $this->commandBus->dispatch(new CommentCommand(
-                commentId: $this->commentIdGenerator->createId(),
-                commentDto: $commentDto
-            ))
+        $comment = $this->commandBus->dispatch(
+            new CommentCommand(
+            commentId: $this->commentIdGenerator->createId(),
+            commentDto: $commentDto
+        )
         );
 
         return $this->responder->respond($comment, $request->headers->all());

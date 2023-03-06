@@ -6,13 +6,10 @@ namespace Application\CommandHandler;
 
 use Application\Command\RateCommand;
 use Comment\Exception\CannotRateCommentTwiceException;
-use Comment\Exception\CannotRateItsOwnCommentException;
 use Comment\Model\Comment;
 use Comment\Repository\CommentRepository;
-use Comment\ValueObject\Author;
-use Comment\ValueObject\CommentId;
 use Comment\ValueObject\CommentRating;
-use SharedKernel\Application\CommandHandler\CommandHandler;
+use SharedKernel\Application\Command\CommandHandler;
 
 final class RateCommandHandler implements CommandHandler
 {

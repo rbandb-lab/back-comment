@@ -7,7 +7,7 @@ namespace Application\QueryHandler;
 use Application\Query\LatestQuery;
 use Comment\Repository\CommentRepository;
 use Doctrine\Common\Collections\Collection;
-use SharedKernel\Application\QueryHandler\QueryHandler;
+use SharedKernel\Application\Query\QueryHandler;
 
 class LatestQueryHandler implements QueryHandler
 {
