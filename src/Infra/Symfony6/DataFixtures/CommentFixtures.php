@@ -18,12 +18,12 @@ class CommentFixtures extends Fixture implements DependentFixtureInterface
     {
         $now = new \DateTime();
         $faker = Factory::create('en');
-        for ($c = 0; $c < 10; $c++){
+        for ($c = 0; $c < 10; $c++) {
             /** @var User $author */
-            $author = $this->getReference('user-'.rand(0,5));
+            $author = $this->getReference('user-'.rand(0, 5));
             $comment = new Comment(
                 id: Uuid::uuid4(),
-                postId: rand(1,2),
+                postId: rand(1, 2),
                 commentContent: $faker->text(100),
                 parent: null
             );
@@ -33,7 +33,7 @@ class CommentFixtures extends Fixture implements DependentFixtureInterface
             $nbOfRatings = rand(0, 5);
             $raters = [0,1,2,3,4,5];
 
-            for($r = 0; $r < $nbOfRatings; $r++){
+            for ($r = 0; $r < $nbOfRatings; $r++) {
                 shuffle($raters);
                 $rater = $raters[0];
                 unset($raters[0]);

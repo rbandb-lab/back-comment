@@ -1,0 +1,23 @@
+nelmio_api_doc:
+    documentation:
+        info:
+            title: Comments App
+            description: Post comments application
+            version: 0.1.0
+        servers:
+            - url: http://localhost
+              description: API over HTTP
+            - url: https://localhost
+              description: API over HTTPS      
+        components:
+            securitySchemes:
+                Bearer:
+                    type: http
+                    scheme: bearer
+                    bearerFormat: JWT         
+        security:
+            - Bearer: []                    
+    areas: # to filter documented areas
+        path_patterns:
+            - ^/api(?!/doc$) # Accepts routes under /api except /api/doc
+

@@ -8,7 +8,7 @@ use Comment\Model\Comment;
 use SharedKernel\Presentation\PresenterInterface;
 use UI\Http\Normalizer\CommentNormalizer;
 
-class ReplyPresenter implements PresenterInterface
+final class ReplyPresenter implements PresenterInterface
 {
     public function present(Comment $comment): array
     {

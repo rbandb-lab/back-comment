@@ -16,7 +16,7 @@ class RatingUserFixtures extends Fixture
     {
         $faker = Factory::create('en');
 
-        for ($u = 0; $u < 11; $u++){
+        for ($u = 0; $u < 11; $u++) {
             $user = new User(
                 id: Uuid::fromString($faker->uuid()),
                 username: $faker->userName

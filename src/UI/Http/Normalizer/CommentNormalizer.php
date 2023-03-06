@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace UI\Http\Normalizer;
 
 use Comment\Model\Comment;
-class CommentNormalizer
+
+final class CommentNormalizer
 {
     public static function normalizeComment(Comment $comment): array
     {
@@ -26,7 +27,7 @@ class CommentNormalizer
         }
 
         $data['subComments'] = $comment->getSubComments()->count() > 0 ? array_map(
-            function (Comment $subComment)  {
+            function (Comment $subComment) {
                 return CommentNormalizer::normalizeComment($subComment);
             },
             $comment->getSubComments()->toArray()
