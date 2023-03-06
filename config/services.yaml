@@ -29,11 +29,6 @@ services:
     UI\:
         resource: '../src/UI'
 
-    # Actions;
-    UI\Http\Action\:
-        resource: '../src/UI/Http/Action/'
-        tags: [controller.service_arguments]
-
     # Messenger
     _instanceof:
         SharedKernel\Application\Command\CommandHandler:
@@ -49,6 +44,3 @@ services:
     Comment\Service\CommentIdGenerator:
         class: Infra\Symfony6\Service\CommentIdGenerator
 
-    nelmio_api_doc.controller.swagger_ui:
-        class: Infra\Symfony6\Controller\NelmioApiDocController
-        tags: [controller.service_arguments]

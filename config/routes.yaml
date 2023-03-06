@@ -1,7 +1,3 @@
-controllers:
-    resource:
-        path: ../src/UI/Http/Action/
-        namespace: UI\Http\Action
-    type: attribute
-
-
+api_doc:
+    path: /api/doc
+    controller: api_platform.swagger_ui.action

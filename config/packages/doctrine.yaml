@@ -17,6 +17,12 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Infra/Symfony6/ORM/Doctrine/Entity'
                 prefix: 'Infra\Symfony6\ORM\Doctrine\Entity'
                 alias: App
+        metadata_cache_driver:
+            type: pool
+            pool: doctrine.system_cache_pool
+        query_cache_driver:
+            type: pool
+            pool: doctrine.system_cache_pool
 
 when@test:
     doctrine:
