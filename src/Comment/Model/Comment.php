@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Comment\Model;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Post;
 use Comment\Entity\CommentInterface;
 use Comment\Exception\CannotRateCommentTwiceException;
 use Comment\Exception\CannotRateItsOwnCommentException;
@@ -13,7 +15,19 @@ use Comment\ValueObject\CommentId;
 use Comment\ValueObject\CommentRating;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Infra\ApiPlatform\State\Processor\CommentProcessor;
 
+//#[Route(path: "/api/posts/{id}/comments", name: "post_comment", methods: ["POST"])]
+#[ApiResource(
+    shortName: 'Comment',
+    operations: [
+        // Crud
+        new Post(
+            validationContext: ['groups' => ['create']],
+            processor: CommentProcessor::class,
+        )
+    ]
+)]
 final class Comment implements CommentInterface
 {
     private CommentId|string $commentId;
