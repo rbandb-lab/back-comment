@@ -6,6 +6,7 @@ namespace Comment\ValueObject;
 
 use Assert\Assert;
 use Comment\Exception\InvalidCommentRatingException;
+use Doctrine\ORM\Mapping as ORM;
 
 final class CommentRating
 {

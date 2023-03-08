@@ -17,7 +17,7 @@ api_platform:
 
     # The list of your resources class directories. Defaults to the directories of the mapping paths but might differ.
     resource_class_directories:
-        - '%kernel.project_dir%/src/Comment/Model/'
+        - '%kernel.project_dir%/src/Infra/ApiPlatform/ApiResource/'
 
     enable_re_doc: false
     enable_swagger_ui: true

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Comment\ValueObject;
 
+use Doctrine\ORM\Mapping as ORM;
+
 final class Author
 {
     public string $id;

@@ -6,6 +6,7 @@ namespace Comment\ValueObject;
 
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
+use Doctrine\ORM\Mapping as ORM;
 
 final class CommentId
 {

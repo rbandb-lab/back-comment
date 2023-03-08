@@ -22,8 +22,10 @@ class CommentProvider implements ProviderInterface
     {
         /** @var string $id */
         $id = $uriVariables['id'];
+        dd($uriVariables);
 
+        dd($id);
         /** @var Comment|null $model */
-        return $this->queryBus->dispatch(new ByPostQuery('1'));
+        return $this->queryBus->find($id);
     }
 }

@@ -70,16 +70,42 @@ c'est un DTO sur lequel on branche les couches ORM et HTTP
 représentations distinctes.
 
 On voit donc que l'implémentation DDD-CQRS via API-P propose une résolution "clé en main" dès lors que l'API-Resource
-joue les 3 roles (DTO, DataMapper, ViewModel). Et cela fait sens, car cela induit une **réduction de la charge de travail**
-par rapport à un modèle orthodoxe. API-P fonctionne aussi moins bien si on accepte pas ce deal.
+joue plusieurs des 3 roles (DTO, DataMapper, ViewModel). 
+
+API-P est généralement utilisé pour son intégration avec Doctrine et parce qu'il propose une **réduction de la charge de travail**
+par rapport à un modèle orthodoxe mais API-P fonctionne aussi moins bien si on n'accepte pas ce deal.
+
+### Quelles sont donc les options ?
 
 Le framework fournit des mécanismes pour ajouter tout cela sur l'Api-Resource:
 1. customization des vues via les normalizers, events, etc
 2. utilisation des ValueObjects via les embeddables doctrine
 3. intégration des validations
 
-Pour la branche API-P il faut donc :
-- Ajouter les Api Resources (Infra), mapping et groupes (validation et serialization) sur les Api Resource
+API-P fonctionne au mieux quand on utilise les API Resource comme DTO et les models (au sens DDD) en tant
+qu'entities, ce qui continue d'alimenter la confusion entre représentation du domaine et représentation dans une table
+et surtout engendre un non-sens = le "model" inclut la base de données dans ses namespaces ...
+
+Les "avantages" d'API-P, a savoir le couplage avec l'ORM et la couche HTTP, d'où découle l'API-doc auto + Hateoas,
+commencent à dysfonctionner dès lors qu'on expose un model qui contienne des value objects, des aggregate, des url
+du type "/article/{id}/price" car les automatisations ne sont pas prévues pour. Le paramétrage à effectuer (par ex
+personalisation de l'API-DOC) devient alors lourd et plus fastidieux que de travailler from scratch.
+
+Donc, quelques choix possibles si on veut faire du DDD + Hexagonal + CQRS **dans API-P** :
+1. Accepter que le Model mappé sur la BDD pour réduire la charge de travail -> le bus command recoit un inputDTO (ApiResource)
+et dispatch une commande, on traite la logique métier dans le CommandHandler en travaillant l'entity juste avant de la persister.
+Et dans le cas d'une Query, on récupère le model, travaille sur la ou les entités, et hydratons une view (ApiResource)
+2. Créer les 3 représentations d'InputDTO, DataMapper et ViewModel et faire une a plusieurs ApiResources pour le même
+  objet en fonction des UseCase [mimer une API from scratch]
+3. Admettre qu'API-P est un framework pour exposer rapidement un CRUD et le limiter à cet usage pour bénéficier au max
+de ses avantages.
+
+
+### Pour la branche API-P il faut donc :
+- Ajouter les Api Resources (Infra) et les utiliser comme des DTO
+- Les bus de message vont donc permettre de booter le model, effectuer la logique métier
+- Il faut ensuite créer les entités doctrine dans le cas d'une command (depuis le Model)
+- Et créer des groupes de serialization sur les Api Resource dans le cas d'une query
 
 ### Author / User:
 - Un User est une structure de data fournies par l'infra et la couche de sécurité

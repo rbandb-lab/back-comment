@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Infra\Symfony6\ORM\Doctrine\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 
-#[ORM\Entity]
+#[ApiResource]
 class Rating
 {
     #[ORM\Id()]

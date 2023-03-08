@@ -7,6 +7,7 @@ namespace Comment\ValueObject;
 use Assert\Assert;
 use Assert\LazyAssertionException;
 use Comment\Exception\InvalidCommentContentException;
+use Doctrine\ORM\Mapping as ORM;
 
 final class CommentContent
 {

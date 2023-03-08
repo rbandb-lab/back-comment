@@ -14,9 +14,14 @@ doctrine:
         mappings:
             App:
                 is_bundle: false
-                dir: '%kernel.project_dir%/src/Infra/Symfony6/ORM/Doctrine/Entity'
-                prefix: 'Infra\Symfony6\ORM\Doctrine\Entity'
+                dir: '%kernel.project_dir%/src/Infra/ApiPlatform/ApiResource'
+                prefix: 'Infra\ApiPlatform\ApiResource'
                 alias: App
+            Vo:
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Comment/ValueObject'
+                prefix: 'Comment\ValueObject'
+                alias: Vo
         metadata_cache_driver:
             type: pool
             pool: doctrine.system_cache_pool
