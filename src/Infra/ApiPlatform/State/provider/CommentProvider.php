@@ -11,7 +11,7 @@ use Comment\Model\Comment;
 use Ramsey\Uuid\Uuid;
 use SharedKernel\Application\Query\QueryBusInterface;
 
-class CommentProvider implements ProviderInterface
+final class CommentProvider implements ProviderInterface
 {
     public function __construct(
         private QueryBusInterface $queryBus,
@@ -22,8 +22,7 @@ class CommentProvider implements ProviderInterface
     {
         /** @var string $id */
         $id = $uriVariables['id'];
-
         /** @var Comment|null $model */
-        return $this->queryBus->dispatch(new ByPostQuery('1'));
+        return $this->queryBus->dispatch(new ByPostQuery($id));
     }
 }

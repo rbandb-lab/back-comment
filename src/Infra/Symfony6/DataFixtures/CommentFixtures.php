@@ -9,7 +9,6 @@ use Faker\Factory;
 use Infra\Symfony6\ORM\Doctrine\Entity\Comment;
 use Infra\Symfony6\ORM\Doctrine\Entity\Rating;
 use Infra\Symfony6\ORM\Doctrine\Entity\User;
-use Infra\Symfony6\Service\CommentIdGenerator;
 use Ramsey\Uuid\Uuid;
 
 class CommentFixtures extends Fixture implements DependentFixtureInterface

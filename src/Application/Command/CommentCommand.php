@@ -17,6 +17,7 @@ final class CommentCommand implements CommandInterface
     private Author $author;
     private CommentContent $commentContent;
 
+
     public function __construct(
         CommentId $commentId,
         CommentDto $commentDto

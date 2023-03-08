@@ -13,7 +13,7 @@ use Comment\ValueObject\Author;
 use Comment\ValueObject\CommentContent;
 use SharedKernel\Application\Command\CommandBusInterface;
 
-class CommentProcessor implements ProcessorInterface
+final class CommentProcessor implements ProcessorInterface
 {
     public function __construct(
         private CommandBusInterface $commandBus,

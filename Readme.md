@@ -50,10 +50,10 @@ La branche API-P va contenir une "translation" de cet hexagone vers API platform
 
 ## Api platform:
 Api platform v3 est un framework qui expose des **Resources** via une Api et qui offre
-des integrations avec des DataProvider et DataProcessor. 
-
+des integrations avec des DataProvider et DataProcessor. Les "avantages" d'API-P, 
+sont essentiellement le couplage avec l'ORM et la couche HTTP, d'où découlent l'API-doc automatique + Hateoas.
 Dans sa config par defaut, on a une resource = une entity = une table et le CRUD opère automatiquement
-de l'UI vers la BDD et de la BDD vers l'UI
+de l'UI vers la BDD et de la BDD vers l'UI. C'est un maker bundle d'API.
 
 ### Utiliser un domaine riche:
 - l'Hexagone par définition fonctionne avec n'importe quels ports et adapters
@@ -69,21 +69,54 @@ c'est un DTO sur lequel on branche les couches ORM et HTTP
 3. En théorie, la représentation persistée, la représentation de la View et la resource exposée devraient être 3 
 représentations distinctes.
 
-On voit donc que l'implémentation DDD-CQRS via API-P propose une résolution "clé en main" dès lors que l'API-Resource
-joue les 3 roles (DTO, DataMapper, ViewModel). Et cela fait sens, car cela induit une **réduction de la charge de travail**
-par rapport à un modèle orthodoxe. API-P fonctionne aussi moins bien si on accepte pas ce deal.
+**On voit donc que l'implémentation DDD-CQRS via API-P pourrait être une solution "clé en main" dès lors que
+l'API-Resource essaye de jouer les 3 roles (DTO, DataMapper, ViewModel).** 
 
-Le framework fournit des mécanismes pour ajouter tout cela sur l'Api-Resource:
-1. customization des vues via les normalizers, events, etc
-2. utilisation des ValueObjects via les embeddables doctrine
-3. intégration des validations
+D'ailleurs Api Platform, par défaut est configuré ainsi. ![](./docs/api-p.png)
+L'api-resource ressemble à un DTO mappé sur une entité anémique qui est exposé
+en CRUD basique.
 
-Pour la branche API-P il faut donc :
-- Ajouter les Api Resources (Infra), mapping et groupes (validation et serialization) sur les Api Resource
 
-### Author / User:
-- Un User est une structure de data fournies par l'infra et la couche de sécurité
-- Dans notre domaine, c'est un ValueObject "Author"
-- Afin de pouvoir tester, nous faisons apparaitre un "User" en attente d'un fournisseur de "User" (IDP),
-qui peut-être fourni via credentials, JWS, etc
+### Du coup quelles sont les options ?
 
+Une approche scindée : 
+- L'api-resource est un DTO d'input et d'output. On y branche HTTP. Le model n'EST PAS l'Api-Resource.
+C'est ce que suggère la conférence des Tilleuls de![2022](./docs/2022.png)
+
+Quand il n'y a pas de règle métier, on se contente de dispatcher query et command et laisser le boulot de doctrine
+se faire dans les handler via le repository. ![Ex](./docs/query.png)\
+\
+Api-platform propose d'aider qu'on spécifie un provider ou un processor custom.![](./docs/custom-op.png)\
+\
+En fait la query passe sous cape ![](./docs/under_the_hood.png)
+
+
+### Tout est bien dans le meilleur des mondes ?
+
+Sur le repo [](https://github.com/mtarld/apip-ddd) associé à la conférence, les choses ne sont pas aussi simples. En effet
+avoir trois représentations d'un même métier pour respecter l'hexagone demande beaucoup de travail et API-P devient
+un obstacle car il est trop loin de sa vocation.
+
+On voit dans le repo que les auteurs font jouer à l'Api-Resource les 3 roles quand il n'y a pas de métier. Comme [ici.](https://github.com/mtarld/apip-ddd/blob/main/src/Subscription/Entity/Subscription.php)\
+Ou alors deux roles, et on se retrouve avec une entité mappée dans le domaine, [beurk](https://github.com/mtarld/apip-ddd/blob/main/src/BookStore/Domain/Model/Book.php) ... 
+avec l'api resource qui devient simple [DTO](https://github.com/mtarld/apip-ddd/blob/main/src/BookStore/Infrastructure/ApiPlatform/Resource/BookResource.php)
+Bref, à chaque UseCase on va avoir moins que les 3 représentations nécessaires, pour tenter de tirer un peu de bénéfices d'API-P.
+
+
+### Notre hexagone
+
+En voulant transférer l'hexagone + CQRS des branches précédentes dans API-P on constate que les problèmes commencent à émerger, car
+API-P n'est pas prévu pour traiter du custom, il le permet car c'est Symfony qui le permet. Et customizer API-P
+requière d'apprendre et découvrir comment "tordre" les usages du fmwk et lui faire faire le grand écart. 
+En effet, il commence à y avoir des dysfonctionnements quand on expose un model qui contienne des value objects, des aggregate,
+ou des url du type "/article/{id}/comment" car les automatisations d'API-P prévoient ici que l'id est celui de comment (en CRUD Basic).
+Documentation light, annotations verbeuses, bugs Api-Doc, tout devient fastidieux pour un bénéfice qui reste :
+1. L'api doc auto
+2. L'inté des composants SF comme validation, pagination doctrine, serializer
+3. Le couplage avec doctrine et avec la couche HTTP
+
+
+### Ma conclusion
+**Pour faire un CRUD, utilisons API-P dans sa forme primitive où tout est automatisé. C'est là où on va faire le plus de gains**
+**Pour traiter du métier, on voie qu'il y a dichotomie voire antinomie à vouloir pousser un hexagone, du CQRS dans une structure
+qui n'est pas faite pour cela. Ce qui est "fait pour" se somme Symfony 6**.

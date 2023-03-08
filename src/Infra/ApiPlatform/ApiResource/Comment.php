@@ -6,5 +6,4 @@ namespace Infra\ApiPlatform\ApiResource;
 
 class Comment
 {
-
 }
