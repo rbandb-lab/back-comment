@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace Infra\Symfony6\ORM\Doctrine\Entity;
 
 use Comment\Entity\CommentInterface;
-use Comment\ValueObject\CommentId;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 
