@@ -27,7 +27,6 @@ class CommentRating
             dd($exception);
         }
 
-
         $this->rate = $rate;
     }
 

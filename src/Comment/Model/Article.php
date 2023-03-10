@@ -8,7 +8,6 @@ use Comment\Exception\CannotDeleteCommentWithChidlrendException;
 use Comment\ValueObject\ArticleContent;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Webmozart\Assert\Assert;
 
 class Article
 {
@@ -16,7 +15,6 @@ class Article
     private ArticleContent $articleContent;
 
     private Collection $comments;
-
 
     public function __construct(string $id, ArticleContent $articleContent)
     {
@@ -32,8 +30,9 @@ class Article
 
     public function removeComment(Comment $drafComment): void
     {
-        if($drafComment->hasChildren() === false){
+        if ($drafComment->hasChildren() === false) {
             $this->comments->removeElement($drafComment);
+
             return;
         }
 
@@ -45,9 +44,6 @@ class Article
         return $this->articleContent;
     }
 
-    /**
-     * @param ArticleContent $articleContent
-     */
     public function setArticleContent(ArticleContent $articleContent): void
     {
         $this->articleContent = $articleContent;

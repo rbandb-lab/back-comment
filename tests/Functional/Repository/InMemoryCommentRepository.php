@@ -19,11 +19,12 @@ class InMemoryCommentRepository implements CommentRepository
 
     public function find(string $id)
     {
-        foreach ($this->comments->getIterator() as $comment){
-            if($comment->id === $id){
+        foreach ($this->comments->getIterator() as $comment) {
+            if ($comment->id === $id) {
                 return $comment;
             }
         }
+
         return null;
     }
 

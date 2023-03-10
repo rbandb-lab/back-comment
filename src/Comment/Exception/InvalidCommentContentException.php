@@ -6,5 +6,4 @@ namespace Comment\Exception;
 
 class InvalidCommentContentException extends \RuntimeException
 {
-
 }

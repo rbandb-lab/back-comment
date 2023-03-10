@@ -4,21 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\Acceptance;
 
-use Assert\Assert;
 use Behat\Behat\Context\Context;
-use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode;
-use Comment\Exception\InvalidCommentContentException;
 use Comment\Model\Article;
 use Comment\Model\Comment;
 use Comment\ValueObject\ArticleContent;
 use Comment\ValueObject\Author;
-use Comment\ValueObject\CommentContent;
 use Comment\ValueObject\CommentRating;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\String\UnicodeString;
+
 use function PHPUnit\Framework\assertCount;
 use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertGreaterThan;
@@ -33,7 +27,6 @@ use function PHPUnit\Framework\assertTrue;
  */
 final class CommentsContext extends AuthContext implements Context
 {
-
     private ?Article $article = null;
     private ?\Exception $exception = null;
     private int $count = 0;
@@ -43,8 +36,8 @@ final class CommentsContext extends AuthContext implements Context
      */
     public function theAuthorIdentifiedByIdPostedAnArticleWithId($arg1, $arg2, $arg3)
     {
-        $author = $this->author->id === $arg2 ? $this->author : null;
-        $article = new Article(id: $arg3, articleContent: new ArticleContent(""));
+        $author = $this->author->getId() === $arg2 ? $this->author : null;
+        $article = new Article(id: $arg3, articleContent: new ArticleContent(''));
 
         $this->article = $article;
     }
@@ -57,25 +50,24 @@ final class CommentsContext extends AuthContext implements Context
         $this->article->setArticleContent(new ArticleContent(implode(PHP_EOL, $string->getStrings())));
     }
 
-
     /**
      * @Given the author :arg1 sends a comment to the article :arg2 with payload:
      */
     public function theAuthorSendsACommentToTheArticleWithPayload2($arg1, $arg2, PyStringNode $string)
     {
-        if($this->article->getId() === $arg2){
+        if ($this->article->getId() === $arg2) {
             $commentAuthor = $arg1;
             $payload = implode(PHP_EOL, $string->getStrings());
-            try{
+            try {
                 $comment = new Comment(
-                    id: "comment-0",
+                    id: 'comment-0',
                     articleId: $arg2,
-                    author: new Author("2".$arg1, $arg1),
+                    author: new Author('2'.$arg1, $arg1),
                     commentContent: $payload
                 );
                 $this->article->addComment($comment);
-                $this->count++;
-            } catch (\Exception $exception){
+                ++$this->count;
+            } catch (\Exception $exception) {
                 $this->exception = $exception;
             }
         }
@@ -87,7 +79,7 @@ final class CommentsContext extends AuthContext implements Context
     public function theArticleCommentHasNoChildComments()
     {
         /** @var Comment $comment */
-        foreach ($this->article->getComments()->getIterator() as $comment){
+        foreach ($this->article->getComments()->getIterator() as $comment) {
             assertTrue($comment->hasChildren() === false);
         }
     }
@@ -113,12 +105,12 @@ final class CommentsContext extends AuthContext implements Context
      */
     public function theMessageTextShouldContainTheFollowingKeywords(PyStringNode $string)
     {
-        $keywords = explode("|",$string->getRaw());
+        $keywords = explode('|', $string->getRaw());
         $exceptionMessage = new UnicodeString($this->exception->getMessage());
-        foreach ($keywords as $keyword){
+        foreach ($keywords as $keyword) {
             $toFind = new UnicodeString($keyword);
-            if($toFind->length() > 0){
-                assertTrue($exceptionMessage->containsAny((string)$toFind));
+            if ($toFind->length() > 0) {
+                assertTrue($exceptionMessage->containsAny((string) $toFind));
             }
         }
     }
@@ -136,20 +128,21 @@ final class CommentsContext extends AuthContext implements Context
      */
     public function theAuthorWithIdSendsACommentToTheArticleWithPayload($arg1, $arg2, $arg3, PyStringNode $string)
     {
-        if($this->article->getId() === $arg3){
+        if ($this->article->getId() === $arg3) {
             $author = new Author($arg2, $arg1);
-            $payload = trim(implode("", $string->getStrings()));
+            $payload = trim(implode('', $string->getStrings()));
             $comment = new Comment(
-                id: "comment-".$this->count,
+                id: 'comment-'.$this->count,
                 articleId: $this->article->getId(),
                 author: $author,
                 commentContent: $payload
             );
             $this->article->addComment($comment);
-            $this->count++;
+            ++$this->count;
+
             return;
         }
-        throw new \InvalidArgumentException("Article not found");
+        throw new \InvalidArgumentException('Article not found');
     }
 
     /**
@@ -168,9 +161,9 @@ final class CommentsContext extends AuthContext implements Context
     {
         $comments = $this->article->getComments();
         assertGreaterThan(0, $comments->count());
-        $comment = $comments->get((int)$arg2);
+        $comment = $comments->get((int) $arg2);
         assertInstanceOf(Comment::class, $comment);
-        assertTrue($comment->getAuthor()->username === $arg1);
+        assertTrue($comment->getAuthor()->getUsername() === $arg1);
     }
 
     /**
@@ -180,7 +173,7 @@ final class CommentsContext extends AuthContext implements Context
     {
         $comments = $this->article->getComments();
         assertGreaterThan(0, $comments->count());
-        $comment = $comments->get((int)$arg2);
+        $comment = $comments->get((int) $arg2);
         assertTrue($comment->getCommentContent()->getContent() === $arg1);
     }
 
@@ -204,9 +197,9 @@ final class CommentsContext extends AuthContext implements Context
         $comment = $comments->get((int) $arg1);
 
         $author = new Author($arg2, $arg1);
-        $payload = trim(implode("", $string->getStrings()));
+        $payload = trim(implode('', $string->getStrings()));
         $reply = new Comment(
-            id: "comment-".$this->count,
+            id: 'comment-'.$this->count,
             articleId: $this->article->getId(),
             author: $author, commentContent: $payload
         );
@@ -231,7 +224,7 @@ final class CommentsContext extends AuthContext implements Context
         $comments = $this->article->getComments();
         $comment = $comments->get((int) $arg3);
         $author = new Author($arg2, $arg1);
-        $rating = new CommentRating($author, (float)$arg4);
+        $rating = new CommentRating($author, (float) $arg4);
         $comment->addRating($rating);
     }
 

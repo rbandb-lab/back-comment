@@ -6,5 +6,4 @@ namespace Comment\Model\UseCase;
 
 class LIstComments
 {
-
 }

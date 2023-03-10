@@ -15,10 +15,10 @@ class InMemoryAuthorRepository implements AuthorRepository
 
     public function __construct()
     {
-        $john = new Author("1-john", "John Doe");
-        $janet = new Author("2-janet", "Janet Doe");
-        $jeremy = new Author("3-jeremy", "Jeremy Doe");
-        $henry = new Author("4-henry", "Henry Doe");
+        $john = new Author('1-john', 'John Doe');
+        $janet = new Author('2-janet', 'Janet Doe');
+        $jeremy = new Author('3-jeremy', 'Jeremy Doe');
+        $henry = new Author('4-henry', 'Henry Doe');
         $this->authors = new ArrayCollection();
         $this->authors->add($john);
         $this->authors->add($janet);
@@ -26,18 +26,19 @@ class InMemoryAuthorRepository implements AuthorRepository
         $this->authors->add($henry);
     }
 
-    public function getAuthors(): \Iterator
+    public function getAuthors(): \Traversable
     {
         return $this->authors->getIterator();
     }
 
     public function find(string $id)
     {
-        foreach ($this->authors->getIterator() as $author){
-            if($author->id === $id){
+        foreach ($this->authors->getIterator() as $author) {
+            if ($author->getId() === $id) {
                 return $author;
             }
         }
+
         return null;
     }
 }

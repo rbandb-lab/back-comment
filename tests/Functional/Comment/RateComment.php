@@ -6,5 +6,4 @@ namespace Tests\Functional\Comment;
 
 class RateComment
 {
-
 }

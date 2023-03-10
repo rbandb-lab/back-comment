@@ -6,5 +6,4 @@ namespace Comment\Exception;
 
 class CannotDeleteCommentWithChidlrendException extends \RuntimeException
 {
-
 }

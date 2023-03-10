@@ -6,5 +6,4 @@ namespace Infra\Symfony6\ORM\Doctrine\Entity;
 
 class User
 {
-
 }

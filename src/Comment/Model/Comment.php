@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Comment\Model;
 
 use Comment\Exception\CannotRateCommentTwiceException;
-use Comment\ValueObject\ArticleContent;
 use Comment\ValueObject\Author;
 use Comment\ValueObject\CommentContent;
 use Comment\ValueObject\CommentRating;
@@ -20,9 +19,7 @@ class Comment
     private Collection $subComments;
     private int $createdAt;
     private CommentContent $commentContent;
-
     private Collection $ratings;
-    private ?int $rating = null;
     private ?string $parentId = null;
 
     public function __construct(string $id, string $articleId, Author $author, string $commentContent)
@@ -54,11 +51,10 @@ class Comment
 
     public function addRating(CommentRating $rating): void
     {
-        foreach ($this->ratings->getIterator() as $existingRating)
-        {
+        foreach ($this->ratings->getIterator() as $existingRating) {
             /** @var CommentRating $existingRating */
-            if($existingRating->getRatingAuthor()->id === $rating->getRatingAuthor()->id){
-                throw new CannotRateCommentTwiceException("Author has already submitted rating");
+            if ($existingRating->getRatingAuthor()->getId() === $rating->getRatingAuthor()->getId()) {
+                throw new CannotRateCommentTwiceException('Author has already submitted rating');
             }
         }
         $this->ratings->add($rating);
@@ -69,17 +65,12 @@ class Comment
         $ratingResult = 0;
         $count = 0;
         /** @var CommentRating $rating */
-        foreach ($this->ratings->getIterator() as $rating){
-            $ratingResult+= $rating->getRate();
-            $count++;
+        foreach ($this->ratings->getIterator() as $rating) {
+            $ratingResult += $rating->getRate();
+            ++$count;
         }
 
         return $ratingResult / $count;
-    }
-
-    public function setRating(?int $rating): void
-    {
-        $this->rating = $rating;
     }
 
     public function getId(): string
