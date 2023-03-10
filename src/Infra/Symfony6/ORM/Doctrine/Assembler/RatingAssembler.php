@@ -13,6 +13,7 @@ class RatingAssembler
     public static function fromOrm(Rating $rating): CommentRating
     {
         $user = $rating->getUser();
+
         return new CommentRating(
             ratingAuthor: new Author(
                 id: (string) $user->getId(),

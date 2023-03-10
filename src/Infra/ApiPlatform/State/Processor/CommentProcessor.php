@@ -7,7 +7,6 @@ namespace Infra\ApiPlatform\State\Processor;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
 use Application\Command\CommentCommand;
-use Comment\Model\Comment;
 use Comment\Model\Dto\CommentDto;
 use Comment\ValueObject\Author;
 use Comment\ValueObject\CommentContent;
@@ -19,6 +18,7 @@ final class CommentProcessor implements ProcessorInterface
         private CommandBusInterface $commandBus,
     ) {
     }
+
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = [])
     {
         $command = new CommentCommand(
@@ -31,7 +31,6 @@ final class CommentProcessor implements ProcessorInterface
             )
         );
 
-        /** @var Comment $model */
         $this->commandBus->dispatch($command);
     }
 }

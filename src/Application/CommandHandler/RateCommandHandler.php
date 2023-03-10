@@ -6,11 +6,8 @@ namespace Application\CommandHandler;
 
 use Application\Command\RateCommand;
 use Comment\Exception\CannotRateCommentTwiceException;
-use Comment\Exception\CannotRateItsOwnCommentException;
 use Comment\Model\Comment;
 use Comment\Repository\CommentRepository;
-use Comment\ValueObject\Author;
-use Comment\ValueObject\CommentId;
 use Comment\ValueObject\CommentRating;
 use SharedKernel\Application\Command\CommandHandler;
 
@@ -25,13 +22,13 @@ final class RateCommandHandler implements CommandHandler
 
     public function __invoke(RateCommand $command): Comment
     {
-        /** @var Comment $comment*/
+        /** @var Comment $comment */
         $comment = $this->commentRepository->find($command->getCommentId());
         $ratings = $comment->getRatings();
 
         foreach ($ratings->getIterator() as $rating) {
             $author = $rating->getRatingAuthor();
-            if ($author->id === $command->getAuthor()->id) {
+            if ($author->id === $command->getAuthor()->getId()) {
                 throw new CannotRateCommentTwiceException();
             }
         }
@@ -44,6 +41,7 @@ final class RateCommandHandler implements CommandHandler
         );
 
         $this->commentRepository->save($comment);
+
         return $comment;
     }
 }

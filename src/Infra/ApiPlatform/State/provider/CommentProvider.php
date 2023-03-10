@@ -7,8 +7,6 @@ namespace Infra\ApiPlatform\State\provider;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
 use Application\Query\ByPostQuery;
-use Comment\Model\Comment;
-use Ramsey\Uuid\Uuid;
 use SharedKernel\Application\Query\QueryBusInterface;
 
 final class CommentProvider implements ProviderInterface
@@ -22,7 +20,7 @@ final class CommentProvider implements ProviderInterface
     {
         /** @var string $id */
         $id = $uriVariables['id'];
-        /** @var Comment|null $model */
+
         return $this->queryBus->dispatch(new ByPostQuery($id));
     }
 }

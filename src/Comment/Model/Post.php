@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace Comment\Model;
 
 use Comment\Exception\CannotDeleteCommentWithChildrenException;
-use Comment\ValueObject\PostContent;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Webmozart\Assert\Assert;
 
 final class Post
 {
@@ -30,6 +28,7 @@ final class Post
     {
         if ($drafComment->hasChildren() === false) {
             $this->comments->removeElement($drafComment);
+
             return;
         }
 

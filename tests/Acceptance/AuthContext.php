@@ -10,16 +10,18 @@ use Comment\ValueObject\Author;
 class AuthContext implements Context
 {
     protected ?Author $author = null;
+
     public function __construct()
     {
-        $this->author = new Author(id: "1-john", username: "John Doe");
+        $this->author = new Author(id: '1-john', username: 'John Doe');
     }
 
     public function isIdentified(Author $author): bool
     {
-        if ($author->id === $this->author?->id && $author->id !== null) {
+        if ($author->getId() === $this->author?->getId() && $author->getId() !== null) {
             return true;
         }
+
         return false;
     }
 

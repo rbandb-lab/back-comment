@@ -17,7 +17,6 @@ final class CommentCommand implements CommandInterface
     private Author $author;
     private CommentContent $commentContent;
 
-
     public function __construct(
         CommentId $commentId,
         CommentDto $commentDto
@@ -42,7 +41,6 @@ final class CommentCommand implements CommandInterface
     {
         return $this->author;
     }
-
 
     public function getCommentContent(): CommentContent
     {

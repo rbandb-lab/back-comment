@@ -27,6 +27,6 @@ final class RateResponder extends ApiResponder
             return new JsonResponse($this->presenter->present($ratedComment), Response::HTTP_OK);
         }
 
-        throw new \LogicException("Server does not supports accept types other than json");
+        throw new \LogicException('Server does not supports accept types other than json');
     }
 }

@@ -16,7 +16,7 @@ class UserFixtures extends Fixture
     {
         $faker = Factory::create('en');
 
-        for ($u = 0; $u < 6; $u++) {
+        for ($u = 0; $u < 6; ++$u) {
             $user = new User(
                 id: Uuid::fromString($faker->uuid()),
                 username: $faker->userName

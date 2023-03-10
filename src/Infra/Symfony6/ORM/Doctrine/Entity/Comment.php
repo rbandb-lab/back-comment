@@ -87,7 +87,6 @@ class Comment implements CommentInterface
         return $this->ratings;
     }
 
-
     public function addRating(Rating $rating): void
     {
         $this->ratings->add($rating);
@@ -118,7 +117,6 @@ class Comment implements CommentInterface
         return $this->children;
     }
 
-
     public function setChildren(Collection $children): void
     {
         $this->children = $children;
@@ -138,7 +136,6 @@ class Comment implements CommentInterface
     {
         return $this->parent;
     }
-
 
     public function setParent(?Comment $parent): void
     {

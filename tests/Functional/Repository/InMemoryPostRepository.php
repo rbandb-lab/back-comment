@@ -6,7 +6,6 @@ namespace Tests\Functional\Repository;
 
 use Comment\Model\Post;
 use Comment\Repository\PostRepository;
-use Comment\ValueObject\PostContent;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
@@ -17,8 +16,8 @@ class InMemoryPostRepository implements PostRepository
     public function __construct()
     {
         $this->posts = new ArrayCollection();
-        $post1 = new Post(id:"post-1");
-        $post2 = new Post(id:"post-2");
+        $post1 = new Post(id: 'post-1');
+        $post2 = new Post(id: 'post-2');
         $this->posts->add($post1);
         $this->posts->add($post2);
     }
@@ -35,6 +34,7 @@ class InMemoryPostRepository implements PostRepository
                 return $post;
             }
         }
+
         return null;
     }
 }

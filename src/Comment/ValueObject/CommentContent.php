@@ -18,14 +18,14 @@ final class CommentContent
         try {
             Assert::lazy()
                 ->that($content, 'content')
-                ->string("must be a string")
+                ->string('must be a string')
                 ->minLength(2)
                 ->maxLength(255)
                 ->verifyNow();
         } catch (LazyAssertionException $exception) {
             $exceptions = $exception->getErrorExceptions();
             $exception = $exceptions[0];
-            throw new InvalidCommentContentException(sprintf($exception->getPropertyPath().'%s'.$exception->getMessage(), " "));
+            throw new InvalidCommentContentException(sprintf($exception->getPropertyPath().'%s'.$exception->getMessage(), ' '));
         }
 
         $this->content = trim($content);

@@ -16,14 +16,14 @@ final class CommentNormalizer
         $data = [
             'id' => (string) $comment->getCommentId(),
             'parentId' => (string) $comment->getParentId(),
-            'author' => $comment->getAuthor()->username,
+            'author' => $comment->getAuthor()->getUsername(),
             'post' => $comment->getPostId(),
             'content' => $comment->getCommentContent()->getContent(),
             'createdAt' => $createdAt->format('c'),
         ];
 
         if ($comment->getRating() !== null) {
-            $data ['rating'] = $comment->getRating();
+            $data['rating'] = $comment->getRating();
         }
 
         $data['subComments'] = $comment->getSubComments()->count() > 0 ? array_map(

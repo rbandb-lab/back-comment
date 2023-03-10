@@ -23,7 +23,7 @@ final class CommentRating
                 ->max(10, 'cannot exceed 10')
                 ->verifyNow();
         } catch (\Exception $exception) {
-            throw new InvalidCommentRatingException(sprintf($exception->getPropertyPath().'%s'.$exception->getMessage(), " "));
+            throw new InvalidCommentRatingException(sprintf($exception->getPropertyPath().'%s'.$exception->getMessage(), ' '));
         }
 
         $this->rate = $rate;
@@ -37,5 +37,10 @@ final class CommentRating
     public function getRate(): float
     {
         return $this->rate;
+    }
+
+    public function getCreatedAt(): int
+    {
+        return $this->createdAt;
     }
 }

@@ -9,8 +9,6 @@ use Comment\Repository\CommentRepository;
 use Comment\ValueObject\CommentId;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Infra\Symfony6\ORM\Doctrine\Assembler\CommentAssembler;
-use Ramsey\Uuid\UuidInterface;
 
 class InMemoryCommentRepository implements CommentRepository
 {
@@ -28,6 +26,7 @@ class InMemoryCommentRepository implements CommentRepository
                 return $comment;
             }
         }
+
         return null;
     }
 
@@ -59,6 +58,7 @@ class InMemoryCommentRepository implements CommentRepository
                 $results->add($comment);
             }
         }
+
         return $results;
     }
 
@@ -68,6 +68,7 @@ class InMemoryCommentRepository implements CommentRepository
         $iterator->uasort(function ($a, $b) {
             return ($a->getCreatedAt() < $b->getCreatedAt()) ? -1 : 1;
         });
+
         return new ArrayCollection(iterator_to_array($iterator));
     }
 }

@@ -55,14 +55,14 @@ final class Comment implements CommentInterface
 
     public function addRating(CommentRating $rating): void
     {
-        if ($this->author->id === $rating->getRatingAuthor()->id) {
-            throw new CannotRateItsOwnCommentException("Author tried to rate its own comment");
+        if ($this->author->getId() === $rating->getRatingAuthor()->getId()) {
+            throw new CannotRateItsOwnCommentException('Author tried to rate its own comment');
         }
 
         foreach ($this->ratings->getIterator() as $existingRating) {
             /** @var CommentRating $existingRating */
-            if ($existingRating->getRatingAuthor()->id === $rating->getRatingAuthor()->id) {
-                throw new CannotRateCommentTwiceException("Author has already submitted rating");
+            if ($existingRating->getRatingAuthor()->getId() === $rating->getRatingAuthor()->getId()) {
+                throw new CannotRateCommentTwiceException('Author has already submitted rating');
             }
         }
         $this->ratings->add($rating);

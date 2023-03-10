@@ -28,6 +28,6 @@ final class CommentId
 
     public function __toString(): string
     {
-        return (string)($this->id);
+        return (string) $this->id;
     }
 }

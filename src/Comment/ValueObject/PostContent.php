@@ -6,7 +6,7 @@ namespace Comment\ValueObject;
 
 final class PostContent
 {
-    public string $content;
+    private string $content;
 
     public function __construct(string $content)
     {

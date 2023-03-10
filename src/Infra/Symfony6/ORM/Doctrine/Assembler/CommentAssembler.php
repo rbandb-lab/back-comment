@@ -31,6 +31,7 @@ final class CommentAssembler
 
         $doctrineComment->setCreatedAt($comment->getCreatedAt());
         $doctrineComment = $this->addChildren($doctrineComment, $comment);
+
         return $doctrineComment;
     }
 
@@ -41,9 +42,9 @@ final class CommentAssembler
             $doctrineSubComment->setParent($doctrineComment);
             $doctrineComment->addChild($doctrineSubComment);
         }
+
         return $doctrineComment;
     }
-
 
     public function fromOrm(DoctrineComment $ormComment): Comment
     {
