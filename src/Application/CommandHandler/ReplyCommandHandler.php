@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Application\CommandHandler;
 
 use Application\Command\ReplyCommand;
-use Comment\Repository\CommentRepository;
 use Comment\Model\Comment;
+use Comment\Repository\CommentRepository;
 
 final class ReplyCommandHandler
 {
@@ -33,6 +33,7 @@ final class ReplyCommandHandler
 
         $this->commentRepository->save($comment);
         $this->commentRepository->save($parent);
+
         return $comment;
     }
 }

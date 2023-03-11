@@ -26,6 +26,6 @@ final class ReplyResponder extends ApiResponder
             return new JsonResponse($this->presenter->present($reply), Response::HTTP_OK);
         }
 
-        throw new \LogicException("Server does not supports accept types other than json");
+        throw new \LogicException('Server does not supports accept types other than json');
     }
 }

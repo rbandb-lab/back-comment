@@ -7,7 +7,6 @@ namespace Comment\Model\Dto;
 use Comment\ValueObject\Author;
 use Comment\ValueObject\CommentContent;
 use Comment\ValueObject\CommentId;
-use Ramsey\Uuid\Uuid;
 
 final class ReplyDto
 {

@@ -37,7 +37,6 @@ final class CommentRepository extends ServiceEntityRepository implements Comment
         $qb
             ->where('c.postId = :postId')
             ->setParameter('postId', $postId);
-        ;
 
         return $this->hydrateModel($qb->getQuery()->getResult());
     }

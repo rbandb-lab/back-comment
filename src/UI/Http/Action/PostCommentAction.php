@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use UI\Http\Responder\CommentResponder;
 
-#[Route(path: "/api/posts/{id}/comments", name: "post_comment", methods: ["POST"])]
+#[Route(path: '/api/posts/{id}/comments', name: 'post_comment', methods: ['POST'])]
 final class PostCommentAction
 {
     private CommandBusInterface $commandBus;
@@ -57,9 +57,9 @@ final class PostCommentAction
 
         $comment = $this->commandBus->dispatch(
             new CommentCommand(
-            commentId: $this->commentIdGenerator->createId(),
-            commentDto: $commentDto
-        )
+                commentId: $this->commentIdGenerator->createId(),
+                commentDto: $commentDto
+            )
         );
 
         return $this->responder->respond($comment, $request->headers->all());

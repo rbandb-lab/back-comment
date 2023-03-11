@@ -6,8 +6,6 @@ namespace Comment\Repository;
 
 use Comment\Model\Comment;
 use Comment\ValueObject\CommentId;
-use Infra\Symfony6\ORM\Doctrine\Assembler\CommentAssembler;
-use Ramsey\Uuid\UuidInterface;
 
 interface CommentRepository
 {

@@ -47,6 +47,7 @@ final class PostRateAction
                 )
             )
         );
+
         return $this->responder->respond($ratedComment, $request->headers->all());
     }
 }

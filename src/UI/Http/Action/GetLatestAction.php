@@ -11,11 +11,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use UI\Http\Responder\GetCommentsResponder;
 
-#[Route(path: "/api/latest/{number}", name: "latest_comments", methods: ["GET"])]
+#[Route(path: '/api/latest/{number}', name: 'latest_comments', methods: ['GET'])]
 final class GetLatestAction
 {
     private QueryBusInterface $queryBus;
     private GetCommentsResponder $getCommentsResponder;
+
     public function __construct(
         QueryBusInterface $queryBus,
         GetCommentsResponder $getCommentsResponder,

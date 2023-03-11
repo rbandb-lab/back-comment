@@ -13,7 +13,6 @@ use UI\Http\Presentation\RatePresenter;
 final class RateResponder extends ApiResponder
 {
     private RatePresenter $presenter;
-    private PropertyAccessorInterface $accessor;
 
     public function __construct(RatePresenter $presenter, PropertyAccessorInterface $accessor)
     {
@@ -27,6 +26,6 @@ final class RateResponder extends ApiResponder
             return new JsonResponse($this->presenter->present($ratedComment), Response::HTTP_OK);
         }
 
-        throw new \LogicException("Server does not supports accept types other than json");
+        throw new \LogicException('Server does not supports accept types other than json');
     }
 }

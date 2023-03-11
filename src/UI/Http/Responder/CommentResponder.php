@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace UI\Http\Responder;
 
-use Comment\Model\Comment as Comment;
+use Comment\Model\Comment;
 use SharedKernel\Responder\HttpResponder;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
-use UI\Http\Presentation\CommentPresenter as CommentPresenter;
+use UI\Http\Presentation\CommentPresenter;
 
 final class CommentResponder extends ApiResponder implements HttpResponder
 {
@@ -27,6 +27,6 @@ final class CommentResponder extends ApiResponder implements HttpResponder
             return new JsonResponse($this->presenter->present($comment), Response::HTTP_OK);
         }
 
-        throw new \LogicException("Server does not supports accept types other than json");
+        throw new \LogicException('Server does not supports accept types other than json');
     }
 }

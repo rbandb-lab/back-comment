@@ -36,7 +36,6 @@ final class RatingDto
         return $this->commentRating;
     }
 
-
     public function getPostId(): string
     {
         return $this->postId;

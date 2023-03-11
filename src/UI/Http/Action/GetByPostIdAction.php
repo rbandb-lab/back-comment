@@ -12,12 +12,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use UI\Http\Responder\GetCommentsResponder;
 
-#[Route(path: "/api/posts/{id}/comments", name: "list_comments_by_post_id", methods: ["GET"])]
+#[Route(path: '/api/posts/{id}/comments', name: 'list_comments_by_post_id', methods: ['GET'])]
 final class GetByPostIdAction
 {
     use EnvelopeTrait;
     private QueryBusInterface $queryBus;
     private GetCommentsResponder $getCommentsResponder;
+
     public function __construct(
         QueryBusInterface $queryBus,
         GetCommentsResponder $getCommentsResponder,
@@ -25,6 +26,7 @@ final class GetByPostIdAction
         $this->queryBus = $queryBus;
         $this->getCommentsResponder = $getCommentsResponder;
     }
+
     public function __invoke(Request $request, string $id): Response
     {
         $results = $this->queryBus->dispatch(new ByPostQuery($id));

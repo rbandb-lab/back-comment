@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Infra\Symfony6\Listener;
 
-use Infra\Symfony6\Exception\InvalidPayloadException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;

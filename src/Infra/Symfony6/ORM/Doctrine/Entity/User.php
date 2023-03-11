@@ -5,14 +5,12 @@ declare(strict_types=1);
 namespace Infra\Symfony6\ORM\Doctrine\Entity;
 
 use Comment\Entity\UserInterface;
-use Comment\ValueObject\CommentId;
-use Ramsey\Uuid\Uuid;
+use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Bridge\Doctrine\Types\UuidType;
-use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
-#[ORM\Table(name: "author")]
+#[ORM\Table(name: 'author')]
 class User implements UserInterface
 {
     #[ORM\Id()]

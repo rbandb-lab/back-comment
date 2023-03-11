@@ -42,7 +42,6 @@ final class CommentCommand implements CommandInterface
         return $this->author;
     }
 
-
     public function getCommentContent(): CommentContent
     {
         return $this->commentContent;

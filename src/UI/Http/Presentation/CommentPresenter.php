@@ -15,6 +15,7 @@ final class CommentPresenter implements PresenterInterface
         $createdAt = new \DateTime();
         $createdAt->setTimestamp($comment->getCreatedAt());
         $presenter = $this;
+
         return CommentNormalizer::normalizeComment($comment);
     }
 }

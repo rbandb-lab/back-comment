@@ -28,6 +28,7 @@ final class CommentCommandHandler implements CommandHandler
         );
 
         $this->commentRepository->save($comment);
+
         return $comment;
     }
 }

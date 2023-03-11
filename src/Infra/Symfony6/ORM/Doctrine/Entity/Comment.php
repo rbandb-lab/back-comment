@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace Infra\Symfony6\ORM\Doctrine\Entity;
 
 use Comment\Entity\CommentInterface;
-use Comment\ValueObject\CommentId;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 
@@ -89,7 +87,6 @@ class Comment implements CommentInterface
         return $this->ratings;
     }
 
-
     public function addRating(Rating $rating): void
     {
         $this->ratings->add($rating);
@@ -120,7 +117,6 @@ class Comment implements CommentInterface
         return $this->children;
     }
 
-
     public function setChildren(Collection $children): void
     {
         $this->children = $children;
@@ -140,7 +136,6 @@ class Comment implements CommentInterface
     {
         return $this->parent;
     }
-
 
     public function setParent(?Comment $parent): void
     {

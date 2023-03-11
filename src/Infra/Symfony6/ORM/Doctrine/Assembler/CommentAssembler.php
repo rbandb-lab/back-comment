@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace Infra\Symfony6\ORM\Doctrine\Assembler;
 
-use Comment\Service\CommentIdGenerator;
+use Comment\Model\Comment;
 use Comment\ValueObject\Author;
 use Comment\ValueObject\CommentId;
 use Infra\Symfony6\ORM\Doctrine\Entity\Comment as DoctrineComment;
-use Comment\Model\Comment;
 use Ramsey\Uuid\Uuid;
-use Ramsey\Uuid\UuidInterface;
 
 final class CommentAssembler
 {
@@ -33,6 +31,7 @@ final class CommentAssembler
 
         $doctrineComment->setCreatedAt($comment->getCreatedAt());
         $doctrineComment = $this->addChildren($doctrineComment, $comment);
+
         return $doctrineComment;
     }
 
@@ -43,9 +42,9 @@ final class CommentAssembler
             $doctrineSubComment->setParent($doctrineComment);
             $doctrineComment->addChild($doctrineSubComment);
         }
+
         return $doctrineComment;
     }
-
 
     public function fromOrm(DoctrineComment $ormComment): Comment
     {

@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Infra\Symfony6\Validator;
 
 use Assert\Assert;
-use Assert\LazyAssertion;
-use Symfony\Component\String\UnicodeString;
 
 final class CommentRequestValidator
 {
